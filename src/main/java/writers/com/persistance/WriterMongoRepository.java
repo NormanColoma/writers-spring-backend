@@ -42,8 +42,23 @@ public class WriterMongoRepository implements WriterRepository {
     }
 
     @Override
-    public void removeWriter(String id) {
+    public void remove(String id) {
         repository.delete(id);
+    }
+
+    @Override
+    public Writer update(Writer writer, String id) {
+        WriterEntity existingWriter = repository.findOne(id);
+
+        if (existingWriter == null) {
+            return null;
+        }
+
+        WriterEntity writerToBeUpdated = this.modelMapper.map(writer, WriterEntity.class);
+        writerToBeUpdated.setId(id);
+        WriterEntity entity = repository.save(writerToBeUpdated);
+
+        return this.modelMapper.map(entity, Writer.class);
     }
 }
 

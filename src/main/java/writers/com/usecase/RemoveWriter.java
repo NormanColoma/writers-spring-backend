@@ -10,6 +10,6 @@ public class RemoveWriter {
     private WriterMongoRepository repository;
 
     public void execute(String writerId) {
-        repository.removeWriter(writerId);
+        repository.remove(writerId);
     }
 }

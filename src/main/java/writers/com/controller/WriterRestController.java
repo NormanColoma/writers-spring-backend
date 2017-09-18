@@ -37,4 +37,15 @@ public class WriterRestController {
         removeWriter.execute(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<Writer> update(@RequestBody Writer writer, @PathVariable String id) {
+        Writer updatedWriter = repository.update(writer, id);
+
+        if(updatedWriter == null) {
+            return new ResponseEntity("Writer with id: " + id + " does not exist", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Writer>(updatedWriter, HttpStatus.OK);
+    }
 }

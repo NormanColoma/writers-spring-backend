@@ -1,28 +1,32 @@
-package writers.com.resources;
+package writers.com.controller;
 
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import writers.com.domain.Writer;
-import writers.com.domain.WriterRepository;
+import writers.com.domain.writer.Writer;
+import writers.com.domain.writer.WriterRepository;
+import writers.com.usecase.CreateWriter;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/writers")
-public class WriterResource {
+public class WriterRestController {
 
+    private CreateWriter createWriter;
     private WriterRepository repository;
 
-    public WriterResource(WriterRepository repository){
-        this.repository = repository;
-    }
-
     @GetMapping
-    public List<Writer> findAll() {
-        return this.repository.findAll();
+    public ResponseEntity<List<Writer>> findAll() {
+
+        return new ResponseEntity<List<Writer>>(this.repository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
-    public Writer add(@RequestBody Writer writer) {
-        return this.repository.create(writer);
+    public ResponseEntity<Writer> add(@RequestBody Writer writer) {
+
+        return new ResponseEntity<>(this.createWriter.execute(writer), HttpStatus.CREATED);
     }
 }

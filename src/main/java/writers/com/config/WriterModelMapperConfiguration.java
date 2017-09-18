@@ -3,7 +3,7 @@ package writers.com.config;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import writers.com.domain.Writer;
+import writers.com.domain.writer.Writer;
 import writers.com.persistance.entities.WriterEntity;
 
 @Configuration

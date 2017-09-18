@@ -1,4 +1,4 @@
-package writers.com.domain;
+package writers.com.domain.writer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

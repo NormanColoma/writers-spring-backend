@@ -4,12 +4,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import writers.com.domain.Writer;
-import writers.com.domain.WriterRepository;
+import writers.com.domain.writer.Writer;
+import writers.com.domain.writer.WriterRepository;
 import writers.com.persistance.entities.WriterEntity;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

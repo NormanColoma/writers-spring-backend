@@ -1,4 +1,6 @@
-package writers.com.domain;
+package writers.com.domain.writer;
+
+import writers.com.domain.writer.Writer;
 
 import java.util.List;
 

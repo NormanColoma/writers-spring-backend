@@ -40,6 +40,11 @@ public class WriterMongoRepository implements WriterRepository {
 
         return writers;
     }
+
+    @Override
+    public void removeWriter(String id) {
+        repository.delete(id);
+    }
 }
 
 @Repository

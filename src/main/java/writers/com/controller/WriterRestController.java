@@ -26,6 +26,16 @@ public class WriterRestController {
         return new ResponseEntity<List<Writer>>(this.repository.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Writer> findOne(@PathVariable String id) {
+        Writer writerFound = repository.findOne(id);
+
+        if(writerFound == null) {
+            return new ResponseEntity("Writer with id: " + id + " does not exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(writerFound, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Writer> add(@RequestBody Writer writer) {
 

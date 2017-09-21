@@ -9,4 +9,5 @@ public interface WriterRepository {
     List<Writer> findAll();
     void remove(String id);
     Writer update(Writer writer, String id);
+    Writer findOne(String id);
 }

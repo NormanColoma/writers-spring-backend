@@ -60,6 +60,16 @@ public class WriterMongoRepository implements WriterRepository {
 
         return this.modelMapper.map(entity, Writer.class);
     }
+
+    @Override
+    public Writer findOne(String id) {
+        WriterEntity existingWriter = repository.findOne(id);
+
+        if (existingWriter == null) {
+            return null;
+        }
+        return this.modelMapper.map(existingWriter, Writer.class);
+    }
 }
 
 @Repository

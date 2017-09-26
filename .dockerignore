@@ -1,0 +1,5 @@
+.gitignore
+Dockerfile
+writers-backend.iml
+.idea
+target

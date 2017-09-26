@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>writers.com</groupId>
-	<artifactId>wrtiters</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>writers</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>demo</name>

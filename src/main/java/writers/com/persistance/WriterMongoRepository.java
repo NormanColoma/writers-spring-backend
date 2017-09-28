@@ -9,7 +9,9 @@ import writers.com.domain.writer.WriterRepository;
 import writers.com.persistance.entities.WriterEntity;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class WriterMongoRepository implements WriterRepository {
@@ -56,6 +58,9 @@ public class WriterMongoRepository implements WriterRepository {
 
         WriterEntity writerToBeUpdated = this.modelMapper.map(writer, WriterEntity.class);
         writerToBeUpdated.setId(id);
+
+        Date createdAt = Optional.ofNullable(existingWriter.getCreated_at()).orElse(new Date());
+        writerToBeUpdated.setCreated_at(createdAt);
         WriterEntity entity = repository.save(writerToBeUpdated);
 
         return this.modelMapper.map(entity, Writer.class);

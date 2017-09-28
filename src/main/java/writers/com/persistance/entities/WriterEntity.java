@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import java.util.Date;
 
@@ -18,5 +19,6 @@ public class WriterEntity {
     private String about;
     private Integer books;
     @CreatedDate
+    @Column(updatable = false)
     private Date created_at;
 }

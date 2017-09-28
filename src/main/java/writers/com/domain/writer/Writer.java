@@ -17,6 +17,6 @@ public class Writer {
     private String name;
     private String about;
     private Integer books;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Europe/Madrid")
     private Date created_at;
 }

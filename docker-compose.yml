@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mongo:
+    image: uanorman/mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data/db
+
+  backend:
+    image: uanorman/writers-backend
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    links:
+      - mongo:mongodb
+    entrypoint: bash -c "exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
+
+  frontend:
+    image: uanorman/writers-front
+    ports:
+      - "80:3000"
+    depends_on:
+      - mongo
+      - backend
+
+volumes:
+  data:

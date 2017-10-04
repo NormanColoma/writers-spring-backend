@@ -1,22 +1,37 @@
-version: '3'
+version: '3.3'
 services:
   mongo:
     image: uanorman/mongo
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+              condition: on-failure
     ports:
       - "27017:27017"
+    networks:
+      - writers_network
     volumes:
       - data:/data/db
 
-  backend:
+  authors-backend:
     image: uanorman/writers-spring-backend
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    ports:
-      - "8080:8080"
     depends_on:
       - mongo
-    links:
-      - mongo:mongodb
+    deploy:
+      replicas: 3
+      placement:
+        constraints: [node.hostname == authors]
+      restart_policy:
+        condition: on-failure
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - MONGO_DB=mongo
+    ports:
+      - "8080:8080"
+    networks:
+      - writers_network
     entrypoint: bash -c "exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
 
   frontend:
@@ -25,7 +40,11 @@ services:
       - "80:3000"
     depends_on:
       - mongo
-      - backend
-
+      - authors-backend
+    networks:
+      - writers_network
 volumes:
   data:
+networks:
+  writers_network:
+    external: true

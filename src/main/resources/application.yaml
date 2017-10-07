@@ -4,3 +4,5 @@ spring:
       host: localhost
       port: 27017
       database: writers
+server:
+  port: 8082

@@ -6,6 +6,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+      labels:
+        - "traefik.enable=false"
     ports:
       - "27017:27017"
     networks:
@@ -36,6 +38,30 @@ services:
       - writers_network
       - traefik-net
     entrypoint: bash -c "exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar"
+
+
+  books-backend:
+    image: uanorman/flask-books
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    environment:
+      - ENV_CONFIG=production
+      - DATABASE=mongo
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.backend=books-backend"
+        - "traefik.frontend.rule=Host:api.books.com"
+        - "traefik.enable=true"
+        - "traefik.port=5000"
+        - "traefik.docker.network=traefik-net"
+    networks:
+      - writers_network
+      - traefik-net
 
   authors-frontend:
     image: uanorman/writers-front

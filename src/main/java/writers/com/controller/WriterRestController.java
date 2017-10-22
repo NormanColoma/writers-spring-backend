@@ -8,6 +8,7 @@ import writers.com.domain.writer.Writer;
 import writers.com.domain.writer.WriterRepository;
 import writers.com.usecase.CreateWriter;
 import writers.com.usecase.RemoveWriter;
+import writers.com.usecase.UpdateWriter;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class WriterRestController {
 
     private CreateWriter createWriter;
     private RemoveWriter removeWriter;
+    private UpdateWriter updateWriter;
     private WriterRepository repository;
 
     @GetMapping
@@ -50,12 +52,7 @@ public class WriterRestController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Writer> update(@RequestBody Writer writer, @PathVariable String id) {
-        Writer updatedWriter = repository.update(writer, id);
-
-        if(updatedWriter == null) {
-            return new ResponseEntity("Writer with id: " + id + " does not exist", HttpStatus.NOT_FOUND);
-        }
-
+        Writer updatedWriter = updateWriter.execute(writer, id);
         return new ResponseEntity<Writer>(updatedWriter, HttpStatus.OK);
     }
 }

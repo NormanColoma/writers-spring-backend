@@ -5,12 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import writers.com.domain.writer.Writer;
-import writers.com.domain.writer.WriterRepository;
+import writers.com.domain.repository.WriterRepository;
 import writers.com.usecase.CreateWriter;
 import writers.com.usecase.RemoveWriter;
 import writers.com.usecase.UpdateWriter;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -25,17 +26,17 @@ public class WriterRestController {
     @GetMapping
     public ResponseEntity<List<Writer>> findAll() {
 
-        return new ResponseEntity<List<Writer>>(this.repository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(this.repository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Writer> findOne(@PathVariable String id) {
-        Writer writerFound = repository.findOne(id);
+        Optional<Writer> writerFound = repository.findOne(id);
 
-        if(writerFound == null) {
+        if(!writerFound.isPresent()) {
             return new ResponseEntity("Writer with id: " + id + " does not exist", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(writerFound, HttpStatus.OK);
+        return new ResponseEntity<>(writerFound.get(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -53,6 +54,6 @@ public class WriterRestController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<Writer> update(@RequestBody Writer writer, @PathVariable String id) {
         Writer updatedWriter = updateWriter.execute(writer, id);
-        return new ResponseEntity<Writer>(updatedWriter, HttpStatus.OK);
+        return new ResponseEntity<>(updatedWriter, HttpStatus.OK);
     }
 }

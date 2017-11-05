@@ -5,7 +5,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import writers.com.domain.writer.Writer;
-import writers.com.domain.writer.WriterRepository;
+import writers.com.domain.repository.WriterRepository;
 import writers.com.persistance.entities.WriterEntity;
 
 import java.lang.reflect.Type;
@@ -29,8 +29,7 @@ public class WriterMongoRepository implements WriterRepository {
         WriterEntity entity = this.modelMapper.map(writer, WriterEntity.class);
 
         this.repository.save(entity);
-
-        writer.setId(entity.getId());
+        writer = this.modelMapper.map(entity, Writer.class);
 
         return  writer;
     }
@@ -67,13 +66,13 @@ public class WriterMongoRepository implements WriterRepository {
     }
 
     @Override
-    public Writer findOne(String id) {
+    public Optional<Writer> findOne(String id) {
         WriterEntity existingWriter = repository.findOne(id);
 
         if (existingWriter == null) {
-            return null;
+            return Optional.empty();
         }
-        return this.modelMapper.map(existingWriter, Writer.class);
+        return Optional.of(this.modelMapper.map(existingWriter, Writer.class));
     }
 }
 

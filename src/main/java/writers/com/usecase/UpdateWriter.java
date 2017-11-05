@@ -3,7 +3,7 @@ package writers.com.usecase;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import writers.com.domain.writer.Writer;
-import writers.com.domain.writer.WriterRepository;
+import writers.com.domain.repository.WriterRepository;
 
 @Component
 @AllArgsConstructor

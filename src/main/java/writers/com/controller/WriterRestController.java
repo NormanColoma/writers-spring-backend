@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import writers.com.domain.writer.Writer;
 import writers.com.domain.repository.WriterRepository;
+import writers.com.persistance.SpringWriterRepository;
+import writers.com.persistance.entities.WriterEntity;
 import writers.com.usecase.CreateWriter;
 import writers.com.usecase.RemoveWriter;
 import writers.com.usecase.UpdateWriter;
@@ -18,10 +20,10 @@ import java.util.Optional;
 @RequestMapping("/writers")
 public class WriterRestController {
 
-    private CreateWriter createWriter;
-    private RemoveWriter removeWriter;
-    private UpdateWriter updateWriter;
-    private WriterRepository repository;
+    private final CreateWriter createWriter;
+    private final RemoveWriter removeWriter;
+    private final UpdateWriter updateWriter;
+    private final WriterRepository repository;
 
     @GetMapping
     public ResponseEntity<List<Writer>> findAll() {

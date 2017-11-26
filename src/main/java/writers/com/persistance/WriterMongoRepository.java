@@ -75,6 +75,3 @@ public class WriterMongoRepository implements WriterRepository {
         return Optional.of(this.modelMapper.map(existingWriter, Writer.class));
     }
 }
-
-@Repository
-interface SpringWriterRepository extends MongoRepository<WriterEntity, String> { }
